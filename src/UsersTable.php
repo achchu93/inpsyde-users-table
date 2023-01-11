@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Inpsyde\UsersTable;
 
+/**
+ * Class UsersTable
+ *
+ * @package Inpsyde\UsersTable
+ */
 final class UsersTable
 {
     /**
