@@ -1,0 +1,19 @@
+{
+    "name": "inpsyde/users-table",
+    "type": "wordpress-plugin",
+    "autoload": {
+        "psr-4": {
+            "Inpsyde\\UsersTable\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ahamed Arshad",
+            "email": "achchu.zats@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+		"php": ">=7.2"
+	}
+}
