@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       Inpsyde Users Table
  * Plugin URI:        https://github.com/achchu93/inpsyde-users-table
@@ -16,4 +17,12 @@
  * @package           Inpsyde\UsersTable
  */
 
+declare(strict_types=1);
+
 namespace Inpsyde\UsersTable;
+
+// reuire composer autoload file
+require_once __DIR__ . '/vendor/autoload.php';
+
+// initiate the plugin
+UsersTable::instance();
