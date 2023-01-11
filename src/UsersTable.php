@@ -51,6 +51,7 @@ final class UsersTable
      */
     private function init()
     {
+        new Admin\Controller();
     }
 
     /**
