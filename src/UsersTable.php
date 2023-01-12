@@ -27,6 +27,7 @@ final class UsersTable
     private function __construct()
     {
         $this->init();
+        $this->initHooks();
     }
 
     /**
@@ -52,6 +53,60 @@ final class UsersTable
     private function init()
     {
         new Admin\Controller();
+    }
+
+    /**
+     * Init plugin hooks
+     *
+     * @since 1.0.0
+     */
+    private function initHooks()
+    {
+        add_action('init', [$this, 'rewriteRule']);
+        add_filter('query_vars', [$this, 'queryVars']);
+        add_action('template_redirect', [$this, 'template']);
+    }
+
+    /**
+     * Add users table page rewrite rule
+     *
+     * @since 1.0.0
+     */
+    public function rewriteRule()
+    {
+        $settings = get_option('users_table_settings');
+        $url = isset($settings['page_url']) ? $settings['page_url'] : 'users-table';
+
+        add_rewrite_rule("{$url}/?$", 'index.php?userstable=true', 'top');
+    }
+
+    /**
+     * Add users table custom query var
+     *
+     * @since 1.0.0
+     *
+     * @param array $queryVars Default query vars
+     * @return array $queryVards Modified query vars
+     */
+    public function queryVars(array $queryVars): array
+    {
+        $queryVars[] = 'userstable';
+        return $queryVars;
+    }
+
+    /**
+     * Set template for users table page
+     *
+     * @since 1.0.0
+     */
+    public function template()
+    {
+        if (! filter_var(get_query_var('userstable'), FILTER_VALIDATE_BOOLEAN)) {
+            return;
+        }
+
+        Helpers\view('users-table', 'general');
+        exit;
     }
 
     /**

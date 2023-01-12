@@ -21,6 +21,7 @@ class Settings
     {
         add_action('admin_menu', [$this, 'pluginSettings']);
         add_action('admin_init', [$this, 'registerSettings']);
+        add_action('update_option_users_table_settings', 'flush_rewrite_rules');
     }
 
     /**
@@ -71,6 +72,11 @@ class Settings
                 'label_for' => 'page_url',
             ]
         );
+
+        // This is to flush the rules if it hasn't cleared it already
+        if (delete_transient('users_table_flush_rules')) {
+            flush_rewrite_rules();
+        }
     }
 
     /**
@@ -89,6 +95,9 @@ class Settings
         if (strpos($data['page_url'], '/') !== false) {
             $data['page_url'] = explode('/', $data['page_url'])[0];
         }
+
+        // To determine if rewrite rules are not generated yet
+        set_transient('users_table_flush_rules', true);
 
         return $data;
     }
