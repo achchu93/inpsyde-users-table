@@ -46,7 +46,13 @@ class Settings
      */
     public function registerSettings()
     {
-        register_setting('users_table', 'users_table_settings');
+        register_setting(
+            'users_table',
+            'users_table_settings',
+            [
+                'sanitize_callback' => [$this, 'sanitizeSettings'],
+            ]
+        );
 
         add_settings_section(
             'page_url_settings',
@@ -65,6 +71,26 @@ class Settings
                 'label_for' => 'page_url',
             ]
         );
+    }
+
+    /**
+     * Sanitize settings data
+     *
+     * @param array $data Posted data array
+     * @return array $data Sanitized data array
+     */
+    public function sanitizeSettings(array $data): array
+    {
+        if (! is_array($data)) {
+            $data = [];
+        }
+
+        // validate endpoint to have single string
+        if (strpos($data['page_url'], '/') !== false) {
+            $data['page_url'] = explode('/', $data['page_url'])[0];
+        }
+
+        return $data;
     }
 
     /**
