@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-wp_head();
+// require_once get_query_template('users-table');
 
-echo 'Users Page Template';
-
-wp_footer();
+var_dump(get_page_template());
