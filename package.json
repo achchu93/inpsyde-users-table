@@ -1,0 +1,23 @@
+{
+  "name": "inpsyde-users-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "wp-scripts start --webpack-src-dir=assets/blocks --output-path=build/blocks",
+    "build": "wp-scripts build --webpack-src-dir=assets/blocks --output-path=build/blocks"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achchu93/inpsyde-users-table.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/achchu93/inpsyde-users-table/issues"
+  },
+  "homepage": "https://github.com/achchu93/inpsyde-users-table#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^25.2.0"
+  }
+}

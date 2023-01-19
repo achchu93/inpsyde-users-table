@@ -1,0 +1,10 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "inpsyde/users-table",
+	"title": "Users Table",
+	"textdomain": "users-table",
+	"icon": "editor-table",
+	"category": "widgets",
+	"editorScript": "file:../../../build/blocks/index.js"
+}

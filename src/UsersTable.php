@@ -55,6 +55,7 @@ final class UsersTable
         new Admin\Controller();
         new Ajax();
         new Template();
+        new Blocks();
     }
 
     /**
@@ -84,5 +85,17 @@ final class UsersTable
     public function pluginDirUrl(): string
     {
         return plugin_dir_url(self::PLUGIN_FILE);
+    }
+
+    /**
+     * Get plugin dir path
+     *
+     * @return string Directory path of plugin
+     *
+     * @since 1.0.0
+     */
+    public function pluginDirPath(): string
+    {
+        return plugin_dir_path(self::PLUGIN_FILE);
     }
 }
