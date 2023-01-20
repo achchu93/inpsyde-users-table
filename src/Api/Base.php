@@ -170,7 +170,7 @@ abstract class Base
         $body = json_decode(wp_remote_retrieve_body($response));
 
         if ($code === 200) {
-            return $body;
+            return (array) $body;
         }
 
         throw new \Exception(wp_remote_retrieve_response_message($response));
