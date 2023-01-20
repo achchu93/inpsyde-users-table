@@ -66,8 +66,6 @@ const UserList = ({ userId, setUserId }) => {
                 columns={columns}
                 data={users}
                 progressPending={loading}
-                pagination
-                paginationComponentOptions={paginationOptions}
                 onRowClicked={(row) => setUserId(row.id)}
                 customStyles={tableStyles}
             />
