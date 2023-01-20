@@ -18,6 +18,10 @@ const App = () => {
 
     const [ userId, setUserId ] = useState('');
 
+    //This is to maintain app state. As the app based on the url hash,
+    // we want to set the app ready only when url is configured.
+    const [ ready, setReady ] = useState(false);
+
     const getUserIdByUrl = () => {
         const id = parseInt(window.location.hash.replace('#', ''));
         return ! isNaN( id ) ? id : '';
@@ -29,6 +33,9 @@ const App = () => {
         if ( userId !== id ) {
             setUserId( id );
         }
+
+        // set the app ready when url configured in mounted hook
+        setReady(true);
 
         const updateUserId = (e) => {
             setUserId( getUserIdByUrl() );
@@ -61,10 +68,10 @@ const App = () => {
 
     const childProps = { userId, setUserId };
 
-    return (
+    return ! ready ? null : (
         <div>
             {!!userId ? <SingleUser {...childProps}/> : <UserList {...childProps}/>}
         </div>
-    )
+    );
 }
 render(<App />, document.getElementById('app'));
