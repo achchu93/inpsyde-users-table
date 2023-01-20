@@ -56,6 +56,7 @@ final class UsersTable
         new Ajax();
         new Template();
         new Blocks();
+        new Assets();
     }
 
     /**
