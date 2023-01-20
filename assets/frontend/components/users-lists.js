@@ -1,10 +1,27 @@
-import { useState, useEffect } from '@wordpress/element';
-import { Spinner } from '@wordpress/components';
+/**
+ * External dependencies
+ */
 import DataTable from 'react-data-table-component';
 
+/**
+ * WordPress dependencies
+ */
+import { useState, useEffect } from '@wordpress/element';
+
+// Table columns
 const columns = window.UsersTable.tableColumns.map( column => ({...column, selector: row => row[column.id] }) );
+// Table pagination options
 const paginationOptions = {
     noRowsPerPage: true
+}
+// Table custom stlyes
+const tableStyles = {
+    head: {
+        style: {
+            fontWeight: 'bold',
+            textTransform: 'uppercase'
+        }
+    }
 }
 
 /**
@@ -52,6 +69,7 @@ const UserList = ({ userId, setUserId }) => {
                 pagination
                 paginationComponentOptions={paginationOptions}
                 onRowClicked={(row) => setUserId(row.id)}
+                customStyles={tableStyles}
             />
         </>
     )
