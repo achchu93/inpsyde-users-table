@@ -56,9 +56,18 @@ class Ajax
     {
         check_ajax_referer('userstable-nonce');
 
+        $users = get_transient('ut-users-list');
+        if (is_array($users)) {
+            wp_send_json_success($users);
+        }
+
         try {
             $users = new Users();
-            wp_send_json_success($users->list());
+            $list = $users->list();
+
+            set_transient('ut-users-list', $list, HOUR_IN_SECONDS);
+
+            wp_send_json_success($list);
         } catch (\Exception $exp) {
             wp_send_json_error($exp->getMessage());
         }
