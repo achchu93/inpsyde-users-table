@@ -40,20 +40,20 @@ class Assets
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'tableColumns' => [
                     [
-                        id => 'id',
-                        name =>  __('ID', 'users-table'),
-                        sortable => true,
+                        'id' => 'id',
+                        'name' =>  __('ID', 'users-table'),
+                        'sortable' => true,
                     ],
                     [
-                        id => 'name',
-                        name => __('Name', 'users-table'),
-                        sortable => true,
+                        'id' => 'name',
+                        'name' => __('Name', 'users-table'),
+                        'sortable' => true,
                     ],
                     [
 
-                        id => 'username',
-                        name => __('Username', 'users-table'),
-                        sortable => true,
+                        'id' => 'username',
+                        'name' => __('Username', 'users-table'),
+                        'sortable' => true,
                     ],
                 ],
             ]
