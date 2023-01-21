@@ -11,11 +11,26 @@ namespace Inpsyde\UsersTable;
  */
 class Assets
 {
+    /**
+     * @var string Assets build directory
+     */
+    private const ASSET_BUILD_DIR = 'build';
+
+    /**
+     * Constructor
+     *
+     * @since 1.0.0
+     */
     public function __construct()
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueTableAssets']);
     }
 
+    /**
+     * Enqueue Table page styles and scripts
+     *
+     * @since 1.0.0
+     */
     public function enqueueTableAssets()
     {
         if (!get_query_var('userstable')) {
@@ -26,7 +41,7 @@ class Assets
 
         wp_enqueue_script(
             'users-table-frontend',
-            UsersTable::instance()->pluginDirUrl() . 'build/frontend/index.js',
+            $this->assetUrl('frontend/index.js'),
             $assetFile['dependencies'],
             $assetFile['version'],
             true
@@ -58,5 +73,17 @@ class Assets
                 ],
             ]
         );
+    }
+
+    /**
+     * Get asset url for the file
+     *
+     * @return string $file File url
+     *
+     * @since 1.0.0
+     */
+    private function assetUrl($file): string
+    {
+        return UsersTable::instance()->pluginDirUrl() . self::ASSET_BUILD_DIR . "/{$file}";
     }
 }
