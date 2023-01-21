@@ -6,7 +6,7 @@ import DataTable from 'react-data-table-component';
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 
 // Table columns
 const columns = window.UsersTable.tableColumns.map( column => ({...column, selector: row => row[column.id] }) );
@@ -31,13 +31,15 @@ const tableStyles = {
  * @param {function} setUserId Callback for set new user id
  * @returns {Component} Render UserList component
  */
-const UserList = ({ userId, setUserId }) => {
+const UserList = ({ setUserId }) => {
 
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [unmounted, setUnmounted] = useState(false); // prevent memory leak
 
     useEffect(() => {
-        if ( users && users.length ) {
+
+        if ( ( users && users.length ) || unmounted ) {
             return;
         }
 
@@ -48,7 +50,9 @@ const UserList = ({ userId, setUserId }) => {
             }
         );
 
-        fetch(`${window.UsersTable.ajaxUrl}?` + params)
+        const abort = new AbortController();
+
+        fetch(`${window.UsersTable.ajaxUrl}?` + params, { signal: abort.signal })
             .then((response) => response.json())
             .then(response => {
                 setUsers(response.data);
@@ -58,6 +62,11 @@ const UserList = ({ userId, setUserId }) => {
                 setUsers([]);
                 setLoading(false);
             });
+
+        return () => {
+            setUnmounted(true); // prevent memory leak
+            abort.abort(); // prevent unwanted api calls
+        };
     });
 
     return (

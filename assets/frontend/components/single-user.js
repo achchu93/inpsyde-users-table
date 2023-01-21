@@ -35,9 +35,11 @@ const SingleUser = ({ userId }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [unmounted, setUnmounted] = useState(false); // prevent memory leak
 
     useEffect(() => {
-        if ( user ) {
+
+        if ( user || unmounted ) {
             return;
         }
 
@@ -49,7 +51,9 @@ const SingleUser = ({ userId }) => {
             }
         );
 
-        fetch(`${window.UsersTable.ajaxUrl}?` + params)
+        const abort = new AbortController();
+
+        fetch( `${window.UsersTable.ajaxUrl}?` + params, { signal: abort.signal } )
             .then((response) => response.json())
             .then(response => {
                 setUser(response.data);
@@ -59,6 +63,11 @@ const SingleUser = ({ userId }) => {
                 setUser(null);
                 setLoading(false);
             });
+
+        return () => {
+            setUnmounted(true); // prevent memory leak
+            abort.abort(); // prevent unwanted api calls
+        };
     });
 
     const data = user ? Object.entries(user).map(([key, value]) => {
