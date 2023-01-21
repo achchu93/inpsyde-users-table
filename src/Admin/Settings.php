@@ -142,15 +142,18 @@ class Settings
         Helpers\render('settings-field-url', 'admin', $args);
     }
 
+    /**
+     * Flush rewrite rules when activa
+     */
     public function maybeRedirectToSettings()
     {
         if (! get_transient(self::REDIRECT_TRANSIENT_KEY)) {
-			return;
-		}
+            return;
+        }
 
-		delete_transient(self::REDIRECT_TRANSIENT_KEY);
-        flush_rewrite_rules(true);
-		wp_safe_redirect(admin_url('options-general.php?page=users-table-settings'));
-		exit;
+        delete_transient(self::REDIRECT_TRANSIENT_KEY);
+
+        wp_safe_redirect(admin_url('options-general.php?page=users-table-settings'));
+        exit;
     }
 }

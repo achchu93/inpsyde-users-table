@@ -69,6 +69,7 @@ final class UsersTable
     private function initHooks()
     {
         register_activation_hook(self::PLUGIN_FILE, [$this, 'activate']);
+        register_deactivation_hook(self::PLUGIN_FILE, [$this, 'deactivate']);
     }
 
     /**
@@ -110,13 +111,33 @@ final class UsersTable
      */
     public function activate()
     {
-        $activate = filter_input( INPUT_POST, 'action', FILTER_UNSAFE_RAW );
-		$checked = filter_input( INPUT_POST, 'checked', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+        set_transient('users_table_flush_rules', true);
 
-        if ('activate-selected' === $activate && count( $checked ) > 1) {
+        $activate = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
+        $checked = isset($_POST['checked']) && is_array($_POST['checked']) ? $_POST['checked'] : []; // phpcs:ignore
+
+        if ('activate-selected' === $activate && count($checked) > 1) {
             return; // bail out if plugin bulk activation
         }
 
         set_transient(Settings::REDIRECT_TRANSIENT_KEY, 5 * MINUTE_IN_SECONDS);
+    }
+
+    /**
+     * Plugin deactivation hook
+     *
+     * @since 1.0.0
+     */
+    public function deactivate()
+    {
+        global $wp_rewrite;
+
+        $settings = get_option('users_table_settings');
+        $url = !empty($settings['page_url']) ? $settings['page_url'] : 'users-table';
+
+        // For some reason just the flush rewrite rules not working.
+        // So we unset the rule here and flush the rewrite rules
+        unset($wp_rewrite->extra_rules_top["{$url}/?$"]);
+        flush_rewrite_rules(true);
     }
 }
