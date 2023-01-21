@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Inpsyde\UsersTable;
 
+use Inpsyde\UsersTable\Admin\Settings;
+
 /**
  * Class UsersTable
  *
@@ -66,6 +68,7 @@ final class UsersTable
      */
     private function initHooks()
     {
+        register_activation_hook(self::PLUGIN_FILE, [$this, 'activate']);
     }
 
     /**
@@ -98,5 +101,22 @@ final class UsersTable
     public function pluginDirPath(): string
     {
         return plugin_dir_path(self::PLUGIN_FILE);
+    }
+
+    /**
+     * Plugin activation hook
+     *
+     * @since 1.0.0
+     */
+    public function activate()
+    {
+        $activate = filter_input( INPUT_POST, 'action', FILTER_UNSAFE_RAW );
+		$checked = filter_input( INPUT_POST, 'checked', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+        if ('activate-selected' === $activate && count( $checked ) > 1) {
+            return; // bail out if plugin bulk activation
+        }
+
+        set_transient(Settings::REDIRECT_TRANSIENT_KEY, 5 * MINUTE_IN_SECONDS);
     }
 }

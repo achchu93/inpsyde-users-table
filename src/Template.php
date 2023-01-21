@@ -61,7 +61,7 @@ class Template
     public function rewriteRule()
     {
         $settings = get_option('users_table_settings');
-        $url = isset($settings['page_url']) ? $settings['page_url'] : 'users-table';
+        $url = !empty($settings['page_url']) ? $settings['page_url'] : 'users-table';
 
         add_rewrite_rule("{$url}/?$", 'index.php?userstable=true', 'top');
     }

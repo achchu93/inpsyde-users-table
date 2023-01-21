@@ -15,6 +15,13 @@ use Inpsyde\UsersTable\Helpers;
 class Settings
 {
     /**
+     * @var string Redirect transient key
+     *
+     * @since 1.0.0
+     */
+    public const REDIRECT_TRANSIENT_KEY = 'ut-activation-redirect';
+
+    /**
      * Settings constructor
      */
     public function __construct()
@@ -22,6 +29,7 @@ class Settings
         add_action('admin_menu', [$this, 'pluginSettings']);
         add_action('admin_init', [$this, 'registerSettings']);
         add_action('update_option_users_table_settings', 'flush_rewrite_rules');
+        add_action('admin_init', [$this, 'maybeRedirectToSettings']);
     }
 
     /**
@@ -132,5 +140,17 @@ class Settings
     public function urlField(array $args)
     {
         Helpers\render('settings-field-url', 'admin', $args);
+    }
+
+    public function maybeRedirectToSettings()
+    {
+        if (! get_transient(self::REDIRECT_TRANSIENT_KEY)) {
+			return;
+		}
+
+		delete_transient(self::REDIRECT_TRANSIENT_KEY);
+        flush_rewrite_rules(true);
+		wp_safe_redirect(admin_url('options-general.php?page=users-table-settings'));
+		exit;
     }
 }
