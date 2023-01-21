@@ -49,7 +49,7 @@ class Blocks
             $name = $blockMeta->name;
             $name = explode('/', $name, 2)[1];
 
-            $file = UsersTable::instance()->pluginDirPath() . self::BLOCK_VIEWS_DIR . "{$name}.php";
+            $file = Helpers\view($name, 'block');
             $blockOptions = [];
 
             if (file_exists($file)) {
@@ -74,7 +74,7 @@ class Blocks
     public function renderBlock(array $attributes, string $content, \WP_Block $block): string
     {
         $name = explode('/', $block->name, 2)[1];
-        $file = UsersTable::instance()->pluginDirPath() . self::BLOCK_VIEWS_DIR . "{$name}.php";
+        $file = Helpers\view($name, 'block');
 
         ob_start();
         include $file;

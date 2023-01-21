@@ -14,16 +14,32 @@ namespace Inpsyde\UsersTable\Helpers;
 use Inpsyde\UsersTable\View;
 
 /**
- * Helper function retrieve views
+ * Helper function to render views
+ *
+ * @param string $view View file
+ * @param string $type View type
+ * @param array $args Arguments
  *
  * @since 1.0.0
- *
- * @param $view View file
- * @param $type View type
- * @param $args Arguments
  */
-function view(string $view, string $type, array $args = [])
+function render(string $view, string $type, array $args = [])
 {
     $view = new View($view, $type);
     $view->render($args);
+}
+
+/**
+ * Helper function to get view
+ *
+ * @param string $view View file
+ * @param string $type View type
+ *
+ * @return string View
+ *
+ * @since 1.0.0
+ */
+function view(string $view, string $type): string
+{
+    $view = new View($view, $type);
+    return $view->view();
 }

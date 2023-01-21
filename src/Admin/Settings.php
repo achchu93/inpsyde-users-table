@@ -109,7 +109,7 @@ class Settings
      */
     public function renderSettingsPage()
     {
-        Helpers\view('settings', 'admin');
+        Helpers\render('settings', 'admin');
     }
 
     /**
@@ -119,7 +119,7 @@ class Settings
      */
     public function settingsUrlSection()
     {
-        Helpers\view('settings-section-url', 'admin');
+        Helpers\render('settings-section-url', 'admin');
     }
 
     /**
@@ -131,6 +131,6 @@ class Settings
      */
     public function urlField(array $args)
     {
-        Helpers\view('settings-field-url', 'admin', $args);
+        Helpers\render('settings-field-url', 'admin', $args);
     }
 }

@@ -22,6 +22,8 @@ class View
      * @param string $view View file
      * @param array $args Extra arguments
      * @param string $viewType View type
+     *
+     * @since 1.0.0
      */
     public function __construct(string $view, string $viewType = 'general')
     {
@@ -33,21 +35,47 @@ class View
      * Render view based on type
      *
      * @param array $args Arguments
+     *
+     * @since 1.0.0
      */
     public function render(array $args = [])
     {
-        $path = dirname(__FILE__);
+        $view = $this->view();
 
-        if ($this->viewType === 'admin') {
-            $path .= '/Admin';
+        if (!empty($view)) {
+            include $view;
         }
+    }
 
-        $file = $path . "/Views/{$this->view}.php";
+    public function view(): string
+    {
+        $file = $this->basePathByType() . "{$this->view}.php";
 
         if (! file_exists($file)) {
-            return;
+            return '';
         }
 
-        require $file;
+        return $file;
+    }
+
+    /**
+     * Get view paths by type
+     *
+     * @since 1.0.0
+     */
+    private function basePathByType()
+    {
+        $path = dirname(__FILE__);
+
+        switch ($this->viewType) {
+            case 'admin':
+                return $path . '/Admin/Views/';
+            case 'block':
+                return $path . '/Views/blocks/';
+            case 'html':
+                return $path . '/Views/html/';
+        }
+
+        return $path . '/Views/';
     }
 }

@@ -253,6 +253,6 @@ class Template
      */
     public function renderTableTemplate()
     {
-        include UsersTable::instance()->pluginDirPath() . 'src/Views/blocks/users-table.php';
+        Helpers\render('users-table', 'block');
     }
 }
