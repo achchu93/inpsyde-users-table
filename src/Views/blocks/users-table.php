@@ -3,6 +3,8 @@
 /**
  * Users Table block template
  *
+ * @since 1.0.0
+ *
  * @package Inpsyde\UsersTable
  */
 

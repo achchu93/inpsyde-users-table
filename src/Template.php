@@ -37,6 +37,8 @@ class Template
         add_filter('get_block_templates', [$this, 'addTableBlockTemplate'], 99, 3);
         add_filter('pre_get_block_template', [$this, 'addSingleTableBlockTemplate'], 99, 3);
         add_filter('get_block_file_template', [$this, 'addSingleTableBlockTemplate'], 99, 3);
+        add_filter('template_include', [$this, 'loadTableTemplate']);
+        add_action('userstable_table', [$this, 'renderTableTemplate']);
     }
 
     /**
@@ -100,7 +102,7 @@ class Template
             return $templates;
         }
 
-        $templates[] = $this->blockTemplateInstance();
+        $templates = [$this->blockTemplateInstance()];
 
         return $templates;
     }
@@ -225,5 +227,32 @@ class Template
         $template->content = serialize_blocks($blocks);
 
         return $template;
+    }
+
+    /**
+     * Load non block theme template
+     *
+     * @param string $template Current template
+     *
+     * @return string $template New template
+     *
+     * @since 1.0.0
+     */
+    public function loadTableTemplate(string $template): string
+    {
+        if (get_query_var('userstable') && !wp_is_block_theme()) {
+            $template = UsersTable::instance()->pluginDirPath() . 'src/Views/users-table.php';
+        }
+        return $template;
+    }
+
+    /**
+     * Renders the main table part
+     *
+     * @since 1.0.0
+     */
+    public function renderTableTemplate()
+    {
+        include UsersTable::instance()->pluginDirPath() . 'src/Views/blocks/users-table.php';
     }
 }
