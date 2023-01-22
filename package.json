@@ -7,7 +7,8 @@
     "start": "wp-scripts start --webpack-src-dir=assets/blocks --output-path=build/blocks",
     "build": "wp-scripts build --webpack-src-dir=assets/blocks --output-path=build/blocks",
     "start:frontend": "wp-scripts start --webpack-src-dir=assets/frontend --output-path=build/frontend",
-    "build:frontend": "wp-scripts build --webpack-src-dir=assets/frontend --output-path=build/frontend"
+    "build:frontend": "wp-scripts build --webpack-src-dir=assets/frontend --output-path=build/frontend",
+    "build:all": "npm run build && npm run build:frontend"
   },
   "repository": {
     "type": "git",
