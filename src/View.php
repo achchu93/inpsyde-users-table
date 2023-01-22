@@ -49,7 +49,7 @@ class View
 
     public function view(): string
     {
-        $file = $this->basePathByType() . "{$this->view}.php";
+        $file = $this->basePathByType() . $this->view . $this->fileExtensionByType();
 
         if (! file_exists($file)) {
             return '';
@@ -63,7 +63,7 @@ class View
      *
      * @since 1.0.0
      */
-    private function basePathByType()
+    private function basePathByType(): string
     {
         $path = dirname(__FILE__);
 
@@ -77,5 +77,21 @@ class View
         }
 
         return $path . '/Views/';
+    }
+
+    /**
+     * Get view extension by template type
+     *
+     * @return string Extension of the template
+     *
+     * @since 1.0.0
+     */
+    private function fileExtensionByType(): string
+    {
+        if ($this->viewType === 'html') {
+            return '.html';
+        }
+
+        return '.php';
     }
 }
