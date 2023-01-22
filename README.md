@@ -64,3 +64,9 @@ Plugin contains a class to control the views within the plugin. Instead of doing
 #### Blocks
 
 All the blocks are from `assets/blocks` directory will be registered as blocks. Block will be determined it's type based on if it has a template file with the same name in template directory. Check `users-table` block how it get added.
+
+#### API
+
+The external API is managed by a `Base` class where basic properties and methods are available. Currently for the `/user` endpoint we have extended a class with the `Base`. For any single endpoint extending the `Base` class would do the trick.
+
+We use WP cache mechanism to store users data which is retrieved from external API. By caching it, we can gain a performance improvement and we can avoid unnecessary API calls within a time frame. For now response will be save for an hour.
