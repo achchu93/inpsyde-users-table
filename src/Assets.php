@@ -82,7 +82,7 @@ class Assets
      *
      * @since 1.0.0
      */
-    private function assetUrl($file): string
+    private function assetUrl(string $file): string
     {
         return UsersTable::instance()->pluginDirUrl() . self::ASSET_BUILD_DIR . "/{$file}";
     }
