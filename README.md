@@ -42,3 +42,25 @@ function my_users_table_before_title()
     echo '<h2>' . esc_html('My top rated customers') . '</h2>'
 }
 ```
+
+## Technical Documentation
+
+#### Activation and Deactivation
+When activating/deactivating the plugin, some actions are applied by the plugin. Which are,
+
+- **Redirecting on activation** - As the plugin allows users to customize the users table page url, It's been redirecting users to plugins settings page to set url. Where users can set the url as per their wish and from there they can navigate to the url which they have set.
+
+- **Flush Rewrite Rules on activation/deactivation** - Since plugin has a custom url for the table page, It uses activation and deactivation hook to flush the rewrite rule. That way new url would get activated when activating the plugin and 404 url would get activated once the plugin got activated.
+
+- **Transient API Usage** - First we set the rewrite rule flush transient to detect if rewrite rule is need to flushed. This is because flushing the cache on activating the plugin is not gonna work as our custom rewrite rule get added on `init` hook. Again when the init hooks is triggered we check if transient is set and then flush rules and delete the transient.
+
+  Another instance is, To redirect the user to settings page, plugin should know if the plugin's state is changed and need to be redirected on actviation. Therefore transient cache is added while activating and on the next `admin_init` hook it will be redirected to settings page.
+
+
+#### Views Controller
+
+Plugin contains a class to control the views within the plugin. Instead of doing `require` all over the plugin, The controller does everything based on the template type. It can handle block template views, Admin views, and Other general views as well. The controller is consist of 2 main actions which are, render the template and return the template.
+
+#### Blocks
+
+All the blocks are from `assets/blocks` directory will be registered as blocks. Block will be determined it's type based on if it has a template file with the same name in template directory. Check `users-table` block how it get added.
