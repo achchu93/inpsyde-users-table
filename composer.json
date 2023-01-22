@@ -7,6 +7,11 @@
         },
         "files": [ "src/Helpers.php" ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Inpsyde\\UsersTable\\Tests\\PhpUnit\\": "tests/phpunit/"
+        }
+    },
     "authors": [
         {
             "name": "Ahamed Arshad",
@@ -18,7 +23,9 @@
 		"php": ">=7.2"
 	},
     "require-dev": {
-        "inpsyde/php-coding-standards": "^1.0@dev"
+        "inpsyde/php-coding-standards": "^1.0@dev",
+        "brain/monkey": "~2.0.0",
+        "phpunit/phpunit": "^9.5"
     },
     "config": {
         "allow-plugins": {
