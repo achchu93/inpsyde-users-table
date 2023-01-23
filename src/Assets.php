@@ -33,7 +33,7 @@ class Assets
      */
     public function enqueueTableAssets()
     {
-        if (!get_query_var('userstable')) {
+        if (!get_query_var('userstable') && !has_block('inpsyde/users-table')) {
             return;
         }
 
