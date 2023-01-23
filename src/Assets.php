@@ -24,6 +24,7 @@ class Assets
     public function __construct()
     {
         add_action('wp_enqueue_scripts', [$this, 'enqueueTableAssets']);
+        add_action('enqueue_block_assets', [$this, 'enqueueEditorAssets']);
     }
 
     /**
@@ -85,5 +86,21 @@ class Assets
     private function assetUrl(string $file): string
     {
         return UsersTable::instance()->pluginDirUrl() . self::ASSET_BUILD_DIR . "/{$file}";
+    }
+
+    /**
+     * Enqueue Editor localized scripts
+     *
+     * @since 1.0.0
+     */
+    public function enqueueEditorAssets()
+    {
+        wp_localize_script(
+            'inpsyde-users-table-editor-script',
+            'UsersTable',
+            [
+                'pluginUrl' => UsersTable::instance()->pluginDirUrl(),
+            ]
+        );
     }
 }
