@@ -31,7 +31,7 @@ const tableStyles = {
  *
  * @since 1.0.0
  */
-const SingleUser = ({ userId }) => {
+const SingleUser = ({ userId, setUserId }) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -89,14 +89,34 @@ const SingleUser = ({ userId }) => {
         };
     }) : [];
 
+    const onBackToUsers = (e) => {
+        e.preventDefault();
+
+        window.history.replaceState({}, '', window.location.href.replace(`#${userId}`, ''));
+        setUserId('');
+    }
+
     return (
-        <DataTable
-            columns={columns}
-            data={data}
-            progressPending={loading}
-            noHeader={true}
-            customStyles={tableStyles}
-        />
+        <>
+            <DataTable
+                columns={columns}
+                data={data}
+                progressPending={loading}
+                noHeader={true}
+                customStyles={tableStyles}
+            />
+            {
+                user && (
+                    <a
+                        role="button"
+                        onClick={onBackToUsers}
+                        style={{marginTop: '10px', marginBottom: '10px', display: 'inline-block'}}
+                    >
+                        {window.UsersTable.tableActions.backToAllUsers}
+                    </a>
+                )
+            }
+        </>
     );
 }
 export default SingleUser;

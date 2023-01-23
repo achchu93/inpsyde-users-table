@@ -72,6 +72,9 @@ class Assets
                         'sortable' => true,
                     ],
                 ],
+                'tableActions' => [
+                    'backToAllUsers' => esc_html__('Back to All users', 'users-table'),
+                ],
             ]
         );
     }
