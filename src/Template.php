@@ -98,11 +98,13 @@ class Template
             return $templates;
         }
 
-        if (!is_admin() && !get_query_var('userstable')) {
-            return $templates;
+        if (is_admin()) {
+            $templates[] = $this->blockTemplateInstance();
         }
 
-        $templates = [$this->blockTemplateInstance()];
+        if (get_query_var('userstable')) {
+            $templates = [$this->blockTemplateInstance()];
+        }
 
         return $templates;
     }
