@@ -70,3 +70,17 @@ All the blocks are from `assets/blocks` directory will be registered as blocks. 
 The external API is managed by a `Base` class where basic properties and methods are available. Currently for the `/user` endpoint we have extended a class with the `Base`. For any single endpoint extending the `Base` class would do the trick.
 
 We use WP cache mechanism to store users data which is retrieved from external API. By caching it, we can gain a performance improvement and we can avoid unnecessary API calls within a time frame. For now response will be save for an hour.
+
+#### Frontend
+
+As React is shipped with WordPress itself, the plugin uses React for frontend table render. That way it is easy to manage states and update the UI based on data.
+
+Route has been configured with basic browser history API. Currently only 2 screens we have to deal while rendering the table. List table and single user table.
+
+## Test Coverage
+
+The plugin has been configured with [Brain Monkey](https://giuseppe-mazzapica.gitbook.io/brain-monkey/) test framework.
+
+To run tests please use the command `composer run test`
+
+PS: I have added only one basic test and I am bit confused to write tests. I would like to learn and get to kmow the workflow.
