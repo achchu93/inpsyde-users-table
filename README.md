@@ -82,5 +82,3 @@ Route has been configured with basic browser history API. Currently only 2 scree
 The plugin has been configured with [Brain Monkey](https://giuseppe-mazzapica.gitbook.io/brain-monkey/) test framework.
 
 To run tests please use the command `composer run test`
-
-PS: I have added only one basic test and I am bit confused to write tests. I would like to learn and get to kmow the workflow.
